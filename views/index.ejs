@@ -1,0 +1,204 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ADN</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+        <link rel="stylesheet" href="/css/style.css">
+        <script src="/js/script.js"></script>
+    </head>
+    <body>
+        <nav class="navbar">
+        <span class="openbtn" onclick="openNav()">&#9776; Menú</span>
+        <div class="title-container">
+        <div class="title">Molecular Insights</div>
+        <img src=" images/Molecular Insights.jpg" alt="">
+        </div>
+        <div class="proa">ProA</div>
+        </nav>
+        <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <span class="titulo-side">Molecular Insights</span>
+        <img class="MIjpg" src="images/adn.gif" alt="">
+        <a href="#" data-toggle="modal" data-target="#myModal2">Informacion</a>
+        <a href="#" data-toggle="modal" data-target="#myModal">Menu De Creacion ADN</a>
+        <a href="#" data-toggle="modal" data-target="#myModal3">Menu De Metilacion ADN</a>
+        <a href="#" data-toggle="modal" data-target="#listaAdnsModal">Ver Lista De Tus ADN</a>
+        <div class="bottom-right-image">
+            <img src="/images/logos.jpg" alt="" width="130">
+        </div>
+        </div>
+        <div class="modal" id="listaAdnsModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Lista de ADNs</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        <ul>
+        <% adns.forEach(function(adn) { %> 
+        <li>
+        <p class="Secuencia_Adn">ADN: <%= adn.Secuencia_Adn %></p>
+        <p class="Secuencia_complementaria">Complementacion: <%= adn.Secuencia_complementaria %></p>
+        <p class="Secuencia_Arnm">Arnm: <%= adn.Secuencia_Arnm %></p>
+        <p class="Secuencia_polipeptidos">Polipeptidos: <%= adn.Secuencia_polipeptidos %></p>
+        <form action="/adns/<%= adn._id %>/eliminar" method="POST">
+        <button class="btn btn-danger" type="submit">Borrar</button>
+        </form>
+        </li>
+        <% }); %>
+        </ul>
+        
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="modal" id="myModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title"> ADN y ARN</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        <form action="/adns" method="POST">
+        <div class="sequence-container">
+        <div class="row mb-3">
+        <div class="col">
+        <label for="Secuencia-adn">ADN:</label>
+        <output class="form-control output" id="adnInput" rows="1" readonly></output>
+        </div>
+        <div class="col-auto align-self-end">
+        <button type="button" class="btn btn-primary blue-button">Generar</button>
+        </div>
+        </div>
+        <div class="row mb-3">
+        <div class="col">
+        <label for="Secuencia_complementaria">Complementacion:</label>
+        <output class="form-control output" id="transcripcionOutput" rows="1" readonly></output>
+        </div>
+        <div class="col-auto align-self-end">
+        <button type="button"id="generarTranscripcion" class="btn btn-primary">Generar</button>
+        </div>
+        </div>
+        <div class="row mb-3">
+        <div class="col">
+        <label for="Secuencia-arnm">Arnm:</label>
+        <output class="form-control output" id="arnMensajeroOutput" rows="1" readonly></output>
+        </div>
+        <div class="col-auto align-self-end">
+        <button type="button"id="generarArnMensajero" class="btn btn-primary">Generar</button>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col">
+        <label for="Secuencia_polipeptidos">Polipeptidos:</label>
+        <textarea class="form-control output" id="polipeptidoOutput" rows="3" readonly></textarea>
+        </div>
+        <div class="col-auto align-self-end">
+        <button type="button" id="generarPolipeptido" class="btn btn-primary">Generar</button>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="modal" id="myModal3">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Hipermetilacion</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        <div class="sequence-container">
+        <div class="row mb-3">
+        <div class="col">
+        <label for="Secuencia-adn">ADN:</label>
+        <output class="form-control output" id="adnInputMetilacion" rows="1" readonly></output>
+        </div>
+        <div class="col-auto align-self-end">
+        <button type="button" class="btn btn-primary blue-button" id="generarAdnMetilacion">Generar</button>
+        </div>
+        </div>
+        <div class="row mb-3">
+        <div class="col">
+        <label for="habraMetilacion">¿Habrá Hipermetilación?</label>
+        <output class="form-control output" id="habraMetilacionOutput" rows="1" readonly></output>
+        </div>
+        </div>
+        <div class="row mb-3">
+        <div class="col">
+        <label for="funcionMetilacion">¿Cuál es su función?</label>
+        <textarea class="form-control output" id="explicacionMetilacion" rows="3" readonly></textarea>
+        </div>
+        </div>
+        <div class="row mb-3">
+        <div class="col">
+        <label for="mecanismoEpigenetico">¿Qué mecanismo epigenético es?</label>
+        <output class="form-control output" id="mecanismoEpigenetico" rows="1" readonly></output>
+        </div>
+        
+        </div>
+        <div class="row mb-3">
+        <div class="col">
+        <label for="canceresAsociados">¿Qué cánceres tiene asociados?</label>
+        <output class="form-control output" id="canceresAsociados" rows="1" readonly></output>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+        <div class="col-auto align-self-end">
+        <button type="button" class="btn btn-primary blue-button" id="Metilacion">Generar</button>
+        </div>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        
+    <div class="modal" id="myModal2">
+        <div class="modal-2">
+        <div class="modal-content-2">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title"> Informacion ADN y ARN </h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        <img src=" /images/Info.jpeg" alt="">
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="image-container">
+        <img src="images/nosotros.jpeg" alt="Nosotros" width="500px">
+    </div>
+    <div class="gray-rectangle">
+    <p class="info-text">En el colegio ProA, un grupo de estudiantes, Thiago, Hernán y Dante, están trabajando en un proyecto de biología para crear una página web. Juntos, están desarrollando contenido educativo interactivo sobre temas de biología, como mitosis, genética y evolución. La página web incluirá videos, imágenes y juegos educativos. Su objetivo es hacer que el aprendizaje de la biología sea accesible y atractivo para otros estudiantes. Con pasión y colaboración, estos jóvenes están dando forma al futuro de la educación en línea.</p>
+    </div>
+    </body>
+    </html>
